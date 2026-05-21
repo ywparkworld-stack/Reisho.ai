@@ -15,10 +15,11 @@ create table public.posts (
   line1 text not null check (char_length(trim(line1)) > 0),
   line2 text not null check (char_length(trim(line2)) > 0),
   line3 text not null check (char_length(trim(line3)) > 0),
+  image_url text,
   created_at timestamptz default now() not null
 );
 
--- Likes
+-- いとおかし (likes)
 create table public.likes (
   id uuid primary key default uuid_generate_v4(),
   user_id uuid references public.profiles(id) on delete cascade not null,
@@ -62,3 +63,28 @@ $$ language plpgsql security definer;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+-- Storage: post-images bucket
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'post-images',
+  'post-images',
+  true,
+  8388608, -- 8MB
+  array['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/heic']
+) on conflict (id) do nothing;
+
+create policy "post_images_select" on storage.objects
+  for select using (bucket_id = 'post-images');
+
+create policy "post_images_insert" on storage.objects
+  for insert with check (
+    bucket_id = 'post-images'
+    and auth.uid() is not null
+  );
+
+create policy "post_images_delete" on storage.objects
+  for delete using (
+    bucket_id = 'post-images'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );

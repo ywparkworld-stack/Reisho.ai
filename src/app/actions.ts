@@ -20,11 +20,29 @@ export async function createPost(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
 
+  let imageUrl: string | null = null
+  const imageFile = formData.get('image') as File | null
+  if (imageFile && imageFile.size > 0) {
+    const ext = imageFile.name.split('.').pop() ?? 'jpg'
+    const path = `${user.id}/${Date.now()}.${ext}`
+    const { error: uploadError } = await supabase.storage
+      .from('post-images')
+      .upload(path, imageFile, { contentType: imageFile.type, upsert: false })
+
+    if (!uploadError) {
+      const { data: { publicUrl } } = supabase.storage
+        .from('post-images')
+        .getPublicUrl(path)
+      imageUrl = publicUrl
+    }
+  }
+
   const { error } = await supabase.from('posts').insert({
     user_id: user.id,
     line1: lines[0],
     line2: lines[1],
     line3: lines[2],
+    image_url: imageUrl,
   })
 
   if (error) throw new Error(error.message)

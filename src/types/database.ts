@@ -5,6 +5,7 @@ export type Database = {
         Row: { id: string; username: string; created_at: string }
         Insert: { id: string; username: string; created_at?: string }
         Update: { id?: string; username?: string; created_at?: string }
+        Relationships: []
       }
       posts: {
         Row: {
@@ -13,6 +14,7 @@ export type Database = {
           line1: string
           line2: string
           line3: string
+          image_url: string | null
           created_at: string
         }
         Insert: {
@@ -21,6 +23,7 @@ export type Database = {
           line1: string
           line2: string
           line3: string
+          image_url?: string | null
           created_at?: string
         }
         Update: {
@@ -29,18 +32,22 @@ export type Database = {
           line1?: string
           line2?: string
           line3?: string
+          image_url?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       likes: {
         Row: { id: string; user_id: string; post_id: string; created_at: string }
         Insert: { id?: string; user_id: string; post_id: string; created_at?: string }
         Update: { id?: string; user_id?: string; post_id?: string; created_at?: string }
+        Relationships: []
       }
     }
-    Views: Record<string, never>
-    Functions: Record<string, never>
-    Enums: Record<string, never>
+    Views: {}
+    Functions: {}
+    Enums: {}
+    CompositeTypes: {}
   }
 }
 
