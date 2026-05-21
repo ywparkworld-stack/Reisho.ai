@@ -42,7 +42,7 @@ export default async function FeedPage() {
 
       {enriched.length === 0 ? (
         <div className="text-center py-24 text-muted">
-          <p className="text-4xl mb-4 font-haiku">静寂</p>
+          <p className="text-4xl mb-4 font-haiku tracking-widest">静寂</p>
           <p className="text-sm">まだ俳句がありません</p>
           {!user && (
             <Link href="/auth/signup" className="btn-primary mt-6 inline-block">

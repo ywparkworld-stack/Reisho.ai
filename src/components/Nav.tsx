@@ -21,9 +21,9 @@ export default async function Nav() {
       <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link
           href="/"
-          className="font-haiku text-xl font-semibold text-ink tracking-widest hover:text-accent transition-colors"
+          className="text-xl font-bold text-ink tracking-tight hover:text-accent transition-colors"
         >
-          隷書
+          Haiku warrior
         </Link>
 
         <nav className="flex items-center gap-2">
