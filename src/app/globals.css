@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-paper: #F8F5F0;
+  --color-ink: #1A1614;
+  --color-accent: #8B4513;
+  --color-border: #E5DDD0;
+  --color-muted: #8C8279;
+  --color-card: #FFFEFB;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", sans-serif;
+}
+
+.font-haiku {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", Georgia, serif;
+}
+
+.haiku-line {
+  @apply font-haiku text-xl leading-relaxed tracking-wider;
+}
+
+.btn-primary {
+  @apply bg-accent text-white px-6 py-2.5 rounded-lg font-medium
+         hover:bg-opacity-90 active:scale-95 transition-all duration-150
+         disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100;
+}
+
+.btn-ghost {
+  @apply text-muted hover:text-ink px-4 py-2 rounded-lg
+         hover:bg-black hover:bg-opacity-5 transition-all duration-150;
+}
+
+.input-field {
+  @apply w-full bg-white border border-border rounded-lg px-4 py-3
+         focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-30
+         focus:border-accent-light placeholder:text-muted
+         font-haiku text-lg tracking-wider transition-all duration-150;
+}
+
+.card {
+  @apply bg-card border border-border rounded-xl p-6 shadow-sm;
+}
